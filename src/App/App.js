@@ -12,7 +12,7 @@ export default function App() {
   const [inputValue, setInputValue] = useState('');
   const [searchColumn, setSearchColumn] = useState('title');
   const [pageNo, setpageNo] = useState(1);
-
+  const rowsPerPageLimit = 50;
   useEffect(() => {
     setLoading(true);
     fetch("http://starlord.hackerearth.com/gamesext")
@@ -50,7 +50,7 @@ export default function App() {
 
   let eachPage = [];
 
-  for(let i=(pageNo>1?(pageNo-1)*50:0); i<( data.length<50 ? data.length : (((pageNo-1)*50)+(((data.length-((pageNo-1)*50))<50) ? (data.length-((pageNo-1)*50)) : 50))) ; i++){
+  for(let i=(pageNo>1?(pageNo-1)*rowsPerPageLimit:0); i<( data.length<rowsPerPageLimit ? data.length : (((pageNo-1)*rowsPerPageLimit)+(((data.length-((pageNo-1)*rowsPerPageLimit))<rowsPerPageLimit) ? (data.length-((pageNo-1)*rowsPerPageLimit)) : rowsPerPageLimit))) ; i++){
     eachPage.push(data[i]);
   }
 
@@ -62,7 +62,7 @@ export default function App() {
       </div>
       <SearchBox inputValue={inputValue} setInputValue={setInputValue} setpageNo={setpageNo} searchColumn={searchColumn} setSearchColumn={setSearchColumn} order={order} dataLength={data.length}/>
       <Datagrid order={order} eachPage={eachPage} />
-      <Footer pageNo={pageNo} dataLength={data.length} setpageNo={setpageNo} setpageNo={setpageNo} rowsPerPage={50}/>
+      <Footer pageNo={pageNo} dataLength={data.length} setpageNo={setpageNo} setpageNo={setpageNo} rowsPerPage={rowsPerPageLimit}/>
     </div>
   );
 }
